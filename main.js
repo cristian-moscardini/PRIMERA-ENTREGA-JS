@@ -1,36 +1,116 @@
-
-
 class Cocktail {
-  constructor(nombre, composición, precio) {
+  constructor(nombre, precio, composicion, codigo) {
     this.nombre = nombre;
-    this.composición = composición;
-    this.precio = precio;       
+    this.precio = precio;
+    this.composicion = composicion;
+    this.codigo = codigo;      
   }
-
 }
+
+
 let listaCocktails = [];
 
 let cocktail1 = new Cocktail(
   "Gin Tonic",
+  300,
   "Gin, Agua Tónica, Hielo, piel de Limón",
-  300
+  "C1"
 );
 let cocktail2 = new Cocktail(
   "Caipirinha",
+  500,
   "CachaÇa, Exprimido de Lima, Syrup de lima, Hielo",
-  500
+  "C2"
 );
 let cocktail3 = new Cocktail(
   "Mojito",
+  600,
   "Ron, Exprimido de Lima, Azucar, Hojas de menta, Hielo molido, Gotas de Angostura",
-  600
+  "C3"
 );
 
 listaCocktails.push(cocktail1);
 listaCocktails.push(cocktail2);
 listaCocktails.push(cocktail3);
 
-let mensaje =
+let divCont = document.getElementById("divcontenedor");
+let fragment = document.createDocumentFragment();
+
+
+
+for (const elemento of listaCocktails) {
+  fragment.appendChild(cocktailDom(elemento));
+}
+divCont.appendChild(fragment);
+
+let btnAgregar = document.getElementById("btnSubmit");
+btnAgregar.onclick = function () {
+  let nombre = document.getElementById("inputNombre").value.trim().toUpperCase();
+  let precio = parseFloat(document.getElementById("inputPrecio").value.trim());
+  let composicion = document.getElementById("inputComposicion").value.trim().toUpperCase();
+  let codigo = document.getElementById("inputCodigo").value.trim().toUpperCase();
+  let cocktailNuevo = new Cocktail(nombre.toUpperCase(), precio, composicion, codigo);
+
+  if (nombre != "" && precio > 0 && composicion != "" && codigo != "") {
+   listaCocktails.push(cocktailNuevo);
+    divCont.appendChild(cocktailDom(cocktailNuevo));
+
+    document.getElementById("inputNombre").value = "";
+    document.getElementById("inputPrecio").value = "";
+    document.getElementById("inputComposicion").value = "";
+    document.getElementById("inputCodigo").value = "";
+  }
+};
+
+let btnEliminar = document.getElementById("btnEliminar");
+btnEliminar.onclick = eliminaSeleccion;
+
+function cocktailDom(elemento) {
+  let contenedor = document.createElement("div");
+  contenedor.innerHTML = `<h3>Cocktail: ${elemento.nombre}</h3> 
+                         <p>Precio: $${elemento.precio}</p> 
+                         <p>Composición: ${elemento.composicion}</p> 
+                         <p>Codigo: ${elemento.codigo}</p>`;
+  contenedor.className = "cocktailFinal";
+  contenedor.ondblclick = function () {
+    divCont.removeChild(contenedor);
+   listaCocktails = listaCocktails.filter(
+      (el) => el.id != elemento.id
+    );
+  };
+  contenedor.onclick = function () {
+    contenedor.classList.toggle("color");
+  };
+
+  return contenedor;
+}
+
+function eliminaSeleccion() {
+  let produs = document.getElementsByClassName("cocktailFinal");
+  for (let i = 0; i < produs.length; i++) {
+    if (produs[i].classList.contains("color")) {
+      divCont.removeChild(produs[i]);
+      i--; //esto lo hago porque al remover un elemento del array, se hace un corrimiento de indices, y tengo q volver a iterar en el mismo indice el proximo ciclo
+    }
+  }
+}
+
+
+
+
+
+
+
+//****************************************************** */
+//ESTO SE UTILIZARÁ EN OTRA FUNCIÓN DE LA APP
+
+
+
+
+
+
+
+/* let mensaje =
   "Ingresa un cocktail y te mostraré su composición y costo\n(Escribe 'Exit' para salir)\nCarta:";
 
 for (const elemento of listaCocktails) {
@@ -53,6 +133,19 @@ while (cocktail != "Exit") {
         "Composición: "+ listaCocktails[0].composición +"\nCosto: $" +
           precioConIva
       );
+      
+      let tarjetas=document.getElementById("tarjetas");
+      let tarjeta=document.createElement("div");
+      tarjeta.className="card col-md-5"
+      tarjeta.innerHTML=`
+        <img src="https://coctelia.com/wp-content/uploads/2018/06/gin-tonic-limon-500x500.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title text-center">Cocktail: ${listaCocktails[0].nombre}</h5>
+          <p class="card-text text-center">Precio: ${listaCocktails[0].precio}</p>
+        </div>
+      `;
+      tarjetas.append(tarjeta);
+
       verificarMetodoPago();
       break;
 
@@ -62,6 +155,7 @@ while (cocktail != "Exit") {
         "Composición: "+ listaCocktails[1].composición +"\nCosto: $" +
           precioConIva
       );
+      
       verificarMetodoPago();
       break;
 
@@ -71,6 +165,7 @@ while (cocktail != "Exit") {
         "Composición: "+ listaCocktails[2].composición +"\nCosto: $" +
           precioConIva
       );
+      
       verificarMetodoPago();
       break;
     
@@ -116,3 +211,4 @@ function calcularDescuento(precioConIva, descuento) {
   let totConDesc = precioConIva - desc;
   return totConDesc;
 }
+ */
