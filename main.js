@@ -7,36 +7,45 @@ class Cocktail {
   }
 }
 
-
 let listaCocktails = [];
 
-let cocktail1 = new Cocktail(
-  "Gin Tonic",
-  300,
-  "Gin, Agua Tónica, Hielo, piel de Limón",
-  "C1"
-);
-let cocktail2 = new Cocktail(
-  "Caipirinha",
-  500,
-  "CachaÇa, Exprimido de Lima, Syrup de lima, Hielo",
-  "C2"
-);
-let cocktail3 = new Cocktail(
-  "Mojito",
-  600,
-  "Ron, Exprimido de Lima, Azucar, Hojas de menta, Hielo molido, Gotas de Angostura",
-  "C3"
-);
+// Carga los productos con el localstorage, si no hay nada asignarle un array vacio
+guardados = JSON.parse(localStorage.getItem("listCockt")) || [];
+if(guardados.length>0){
+  for(const elem of guardados){
+    let nuevoCockt = new Cocktail(elem.nombre,elem.precio,elem.composicion,elem.codigo);
+    listaCocktails.push(nuevoCockt);
+  }
+}else{
+  //si el localstorage esta vacio cargo algunos productos, para tener de referencia algo para mostrar
+  let cocktail1 = new Cocktail(
+    "Gin Tonic",
+    300,
+    "Gin, Agua Tónica, Hielo, piel de Limón",
+    "C1"
+  );
+  let cocktail2 = new Cocktail(
+    "Caipirinha",
+    500,
+    "CachaÇa, Exprimido de Lima, Syrup de lima, Hielo",
+    "C2"
+  );
+  let cocktail3 = new Cocktail(
+    "Mojito",
+    600,
+    "Ron, Exprimido de Lima, Azucar, Hojas de menta, Hielo molido, Gotas de Angostura",
+    "C3"
+  );
+    
+  listaCocktails.push(cocktail1);
+  listaCocktails.push(cocktail2);
+  listaCocktails.push(cocktail3);  
+}
 
-listaCocktails.push(cocktail1);
-listaCocktails.push(cocktail2);
-listaCocktails.push(cocktail3);
+actualizarStorage();
 
 let divCont = document.getElementById("divcontenedor");
 let fragment = document.createDocumentFragment();
-
-
 
 for (const elemento of listaCocktails) {
   fragment.appendChild(cocktailDom(elemento));
@@ -52,13 +61,27 @@ btnAgregar.onclick = function () {
   let cocktailNuevo = new Cocktail(nombre.toUpperCase(), precio, composicion, codigo);
 
   if (nombre != "" && precio > 0 && composicion != "" && codigo != "") {
-   listaCocktails.push(cocktailNuevo);
-    divCont.appendChild(cocktailDom(cocktailNuevo));
+    if(listaCocktails.some((el)=>(el.codigo == codigo))){
+      //agrego validacion para que cuando se agreguen elementos nuevos no sean con un codigo ya utilizado
+      alert("Codigo de Cocktail ya existente");
+      
+      //mantengo en los inputs del DOM los valores que habiamos ingresado pero borro el campo de codigo
+      
+      document.getElementById("inputNombre").value = nombre;
+      document.getElementById("inputPrecio").value = precio;
+      document.getElementById("inputComposicion").value = composicion;
+      document.getElementById("inputCodigo").value = "";
+    }else{
+      listaCocktails.push(cocktailNuevo);
+      divCont.appendChild(cocktailDom(cocktailNuevo));
 
-    document.getElementById("inputNombre").value = "";
-    document.getElementById("inputPrecio").value = "";
-    document.getElementById("inputComposicion").value = "";
-    document.getElementById("inputCodigo").value = "";
+      actualizarStorage();
+
+      document.getElementById("inputNombre").value = "";
+      document.getElementById("inputPrecio").value = "";
+      document.getElementById("inputComposicion").value = "";
+      document.getElementById("inputCodigo").value = "";
+    }
   }
 };
 
@@ -70,13 +93,12 @@ function cocktailDom(elemento) {
   contenedor.innerHTML = `<h3>Cocktail: ${elemento.nombre}</h3> 
                          <p>Precio: $${elemento.precio}</p> 
                          <p>Composición: ${elemento.composicion}</p> 
-                         <p>Codigo: ${elemento.codigo}</p>`;
+                         <p class="nid">Codigo: ${elemento.codigo}</p>`;
   contenedor.className = "cocktailFinal";
   contenedor.ondblclick = function () {
     divCont.removeChild(contenedor);
-   listaCocktails = listaCocktails.filter(
-      (el) => el.id != elemento.id
-    );
+   listaCocktails = listaCocktails.filter((el) => el.codigo != elemento.codigo);
+   actualizarStorage();
   };
   contenedor.onclick = function () {
     contenedor.classList.toggle("color");
@@ -89,13 +111,22 @@ function eliminaSeleccion() {
   let produs = document.getElementsByClassName("cocktailFinal");
   for (let i = 0; i < produs.length; i++) {
     if (produs[i].classList.contains("color")) {
+
+      let idelim = produs[i].querySelector(".nid").textContent;
+      listaCocktails = listaCocktails.filter((el) => (el.codigo != idelim));//borro los productos seleccionadios de la coleccion
+
       divCont.removeChild(produs[i]);
       i--; //esto lo hago porque al remover un elemento del array, se hace un corrimiento de indices, y tengo q volver a iterar en el mismo indice el proximo ciclo
     }
   }
+
+  actualizarStorage();
 }
 
+function actualizarStorage(){
 
+  localStorage.setItem("listCockt",JSON.stringify(listaCocktails));
+}
 
 
 
