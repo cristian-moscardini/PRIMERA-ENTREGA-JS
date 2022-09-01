@@ -1,0 +1,20 @@
+[
+    {
+    "nombre":"Gin Tonic",
+    "precio":300,
+    "composicion":"Gin, Agua Tónica, Hielo, piel de Limón",
+    "codigo":"C1"
+    },
+    {
+    "nombre":"Caipirinha",
+    "precio":500,
+    "composicion":"CachaÇa, Exprimido de Lima, Syrup de lima, Hielo",
+    "codigo":"C2"
+    },
+    {
+    "nombre":"Mojito",
+    "precio":600,
+    "composicion":"Ron, Exprimido de Lima, Azucar, Hojas de menta, Hielo molido, Gotas de Angostura",
+    "codigo":"C3"
+    }
+]

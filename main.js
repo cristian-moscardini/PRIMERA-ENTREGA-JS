@@ -14,8 +14,86 @@ let btnAgregar = document.getElementById("btnSubmit");
 let btnEliminar = document.getElementById("btnEliminar");
 let fechaAcceso = document.getElementById("fechaAcceso");
 let DateTime = luxon.DateTime;
+let url = "db.json";
+
+document.addEventListener("DOMContentLoaded", () => {
+  let guardados = [];
+  
+  const cargarBase = async () => {
+    const resp = await fetch(url);
+    guardados = await resp.json();
+    guardados.forEach((elemento) => {
+      const { nombre, precio, composicion, codigo } = elemento; //desestructuramos el elemento
+      let nuevoCockt = new Cocktail(nombre, precio, composicion, codigo);
+      listaCocktails.push(nuevoCockt);
+    });
+
+    //cargo la fecha de ultimo acceso
+    let fecha = JSON.parse(localStorage.getItem("fechaAcc")) || "";
+    if (fecha != "") {
+      fechaAcceso.innerText = "Ultimo Acceso: " + fecha;
+      let fechaNueva = DateTime.now();
+      //actualiza la hora de ultimo acceso como la de hoy, para mostrarla la proxima vez
+      localStorage.setItem(
+        "fechaAcc",
+        JSON.stringify(fechaNueva.toLocaleString())
+      );
+    } else {
+      //si es la primera vez que se ingresa muestra como ultimo acceso la fecha actual
+      let fechaNueva = DateTime.now();
+      fechaAcceso.innerText = "Ultimo Acceso: " + fechaNueva.toLocaleString();
+      localStorage.setItem(
+        "fechaAcc",
+        JSON.stringify(fechaNueva.toLocaleString())
+      );
+    }
+
+    //cargo en el dom todos los elementos de la coleccion//
+
+    let fragment = document.createDocumentFragment();
+    for (const elemento of listaCocktails) {
+      fragment.appendChild(cocktailDom(elemento));
+    }
+    divCont.appendChild(fragment);
+
+    //agregamos eventos
+
+    btnAgregar.onclick = agregaCocktail;
+    btnEliminar.onclick = eliminaSeleccion;
+  };
+
+  cargarBase();
+});
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
 // Carga los productos con el localstorage, si no hay nada asignarle un array vacio
 let guardados = JSON.parse(localStorage.getItem("listCockt")) || [];
 if(guardados.length>0){
@@ -75,7 +153,7 @@ divCont.appendChild(fragment);
 btnAgregar.onclick = agregaCocktail;
 btnEliminar.onclick = eliminaSeleccion;
 
-
+ */
 
 function cocktailDom(elemento) {
   let contenedor = document.createElement("div");
@@ -101,7 +179,7 @@ function cocktailDom(elemento) {
         listaCocktails = listaCocktails.filter(
           (el) => el.codigo != codigo
         );
-        actualizarStorage();
+        
 
         Toastify({
           text: "Producto borrado!",
@@ -109,6 +187,14 @@ function cocktailDom(elemento) {
           gravity: "bottom",
           position: "right",
           style: {background: 'red'}
+        }).showToast();
+      } else {
+        Toastify({
+          text: "No se ha borrado nada",
+          duration: 3000,
+          gravity: "bottom",
+          position: "right",
+          style: { background: "green" },
         }).showToast();
       }
     });
@@ -157,7 +243,7 @@ function agregaCocktail() {
       listaCocktails.push(cocktNuevo);
       divCont.appendChild(cocktailDom(cocktNuevo));
 
-      actualizarStorage();
+      
 
       document.getElementById("inputNombre").value = "";
       document.getElementById("inputPrecio").value = "";
@@ -196,7 +282,7 @@ function eliminaSeleccion() {
           i--; //esto lo hago porque al remover un elemento del array, se hace un corrimiento de indices, y tengo q volver a iterar en el mismo indice el proximo ciclo
         }
       }
-      actualizarStorage();
+      
       Toastify({
         text: "Productos borrados!",
         duration: 3000,
@@ -204,13 +290,21 @@ function eliminaSeleccion() {
         position: "right",
         style: {background: 'red'}
       }).showToast();
+    } else {
+      Toastify({
+        text: "No se ha borrado nada",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        style: { background: "green" },
+      }).showToast();
     }
   });
 }
 
-function actualizarStorage(){
+/* function actualizarStorage(){
   localStorage.setItem("listCockt",JSON.stringify(listaCocktails));
-}
+} */
 
 
 
