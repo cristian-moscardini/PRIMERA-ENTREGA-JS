@@ -1,0 +1,99 @@
+[
+    { 
+      "nombre": "Negroni", 
+      "precio": 600, 
+      "composicion": "Colgante",
+      "tipo": "Aperitivo", 
+      "codigo": "C1" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/qgdu971561574065.jpg"
+    },
+    { 
+      "nombre": "Mai Tai", 
+      "precio": 750, 
+      "composicion": "Ron, Lima, Syrup, Triple Sec, Orgeat",
+      "tipo": "Tiki", 
+      "codigo": "C2" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/twyrrp1439907470.jpg"
+    },
+    { 
+      "nombre": "Gin Tonic", 
+      "precio": 400, 
+      "composicion": "Gin, Agua Tónica, Hielo, piel de Limón",
+      "tipo": "Clásico", 
+      "codigo": "C3" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/qcgz0t1643821443.jpg"
+    },
+    { 
+      "nombre": "Daiquiri", 
+      "precio": 400, 
+      "composicion": "Ron blanco, Lima, Azúcar",
+      "tipo": "Clásico", 
+      "codigo": "C4" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/mrz9091589574515.jpg"
+    },
+    { 
+      "nombre": "Mojito",
+      "precio": 500,
+      "composicion": "Ron, Exprimido de Lima, Azucar, Hojas de menta, Angostura",
+      "tipo": "Clásico",
+      "codigo": "C5" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg"
+    },
+    { 
+      "nombre": "Caipirinha", 
+      "precio": 500, 
+      "composicion": "CachaÇa, Exprimido de Lima, Syrup de lima, Hielo",
+      "tipo": "Tiki", 
+      "codigo": "C6" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/dif7a31614006331.jpg"
+    },
+    { 
+      "nombre": "Old Fashioned", 
+      "precio": 800, 
+      "composicion": "Bourbon, Gotas de Angostura, Azúcar, Dash de Agua",
+      "tipo": "Clásico", 
+      "codigo": "C7" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/vrwquq1478252802.jpg"
+    },
+    { 
+      "nombre": "Zombie",
+      "precio": 800,
+      "composicion": "Ron Especiado, Proof Ron, Granadina, Jugo de Lima, Angostura",
+      "tipo": "Tiki",
+      "codigo": "C8" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/2en3jk1509557725.jpg"
+    },
+    { 
+      "nombre": "Americano", 
+      "precio": 400, 
+      "composicion": "Campari, Vermouth Rosso, Piel de limón, Rodaja de Naranja",
+      "tipo": "Aperitivo", 
+      "codigo": "C9" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/709s6m1613655124.jpg"
+    },
+    { 
+      "nombre": "Piña colada", 
+      "precio": 500, 
+      "composicion": "Ron blanco, Leche de Coco, Jugo de Ananá",
+      "tipo": "Tiki", 
+      "codigo": "C10" , 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/cpf4j51504371346.jpg"
+    },
+    { 
+      "nombre": "Margarita",
+      "precio": 600,
+      "composicion": "Tequila blanco, Triple Sec, Jugo de Lima, Sal",
+      "tipo": "Clásico",
+      "codigo": "C11", 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/5noda61589575158.jpg"
+    },
+    { 
+      "nombre": "Aperol Spritz",
+      "precio": 600,
+      "composicion": "Aperol, Prosecco, Agua con gas",
+      "tipo": "Aperitivo",
+      "codigo": "C12", 
+      "urlImg": "https://www.thecocktaildb.com/images/media/drink/iloasq1587661955.jpg"
+    }
+  ]
+  
